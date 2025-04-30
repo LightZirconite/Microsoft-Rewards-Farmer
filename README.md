@@ -4,7 +4,7 @@
 ![Maintenance](https://img.shields.io/badge/maintained-yes-green.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)
 ![Node](https://img.shields.io/badge/Node-14+-green.svg)
-[![Website](https://img.shields.io/badge/website-msrewards.script-blue.svg)](https://msrewards-script.com)
+[![Website](https://img.shields.io/badge/website-msrewards.script-blue.svg)](https://git.justw.tf/Light-Zirconite/Microsoft-Rewards-Farmer)
 
 A powerful, feature-rich automation tool for Microsoft Rewards built with TypeScript, Cheerio, and Playwright. This script automates earning points by completing searches, quizzes, polls, and other activities.
 

@@ -8,7 +8,7 @@
 
 A powerful, feature-rich automation tool for Microsoft Rewards built with TypeScript, Cheerio, and Playwright. This script automates earning points by completing searches, quizzes, polls, and other activities.
 
-**Project Website:** [git.justw.tf](https://git.justw.tf](https://git.justw.tf/Light-Zirconite/Microsoft-Rewards-Farmer)
+**Project Website:** [git.justw.tf](https://git.justw.tf/Light-Zirconite/Microsoft-Rewards-Farmer)
 
 ## Overview
 

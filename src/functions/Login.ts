@@ -129,6 +129,60 @@ export class Login {
     private async enterPassword(page: Page, password: string) {
         const passwordInputSelector = 'input[type="password"]'
         try {
+            // Check for Microsoft's new verification code flow first
+            const verificationScreen = await page.waitForSelector('#proofConfirmationText, div[data-testid="proofConfirmationTitle"], .verificationTitle, [data-testid="viewFooter"]', { 
+                state: 'visible', 
+                timeout: 3000 
+            }).catch(() => null)
+
+            if (verificationScreen) {
+                this.bot.log(this.bot.isMobile, 'LOGIN', 'Detected verification code screen')
+                
+                // Look for "Use your password" option or other ways to sign in
+                const usePasswordSelectors = [
+                    'a[data-testid="usePasswordLink"]',
+                    'a[id*="usePassword"]', 
+                    'a[href*="password"]',
+                    'button[data-testid="usePasswordButton"]',
+                    '#usePasswordLink',
+                    '[data-value="usePassword"]',
+                    'span[role="button"]' // For "Other ways to sign in"
+                ]
+                
+                let usePasswordElement = null
+                for (const selector of usePasswordSelectors) {
+                    usePasswordElement = await page.waitForSelector(selector, { 
+                        state: 'visible', 
+                        timeout: 2000 
+                    }).catch(() => null)
+                    if (usePasswordElement) break
+                }
+
+                if (usePasswordElement) {
+                    this.bot.log(this.bot.isMobile, 'LOGIN', 'Found "Use your password" or "Other ways" option, clicking it')
+                    await usePasswordElement.click()
+                    await this.bot.utils.wait(3000)
+                    
+                    // If we clicked "Other ways", look for password option in the list
+                    const passwordOption = await page.waitForSelector('[role="listitem"]', { 
+                        state: 'visible', 
+                        timeout: 3000 
+                    }).catch(() => null)
+                    
+                    if (passwordOption) {
+                        // Try to find the password option (usually second item)
+                        const secondListItem = page.locator('[role="listitem"]').nth(1)
+                        if (await secondListItem.isVisible()) {
+                            this.bot.log(this.bot.isMobile, 'LOGIN', 'Selecting password option from list')
+                            await secondListItem.click()
+                            await this.bot.utils.wait(2000)
+                        }
+                    }
+                } else {
+                    this.bot.log(this.bot.isMobile, 'LOGIN', 'Could not find "Use your password" option, trying standard flow', 'warn')
+                }
+            }
+
             const viewFooter = await page.waitForSelector('[data-testid="viewFooter"]', { timeout: 2000 }).catch(() => null)
             if (viewFooter) {
                 this.bot.log(this.bot.isMobile, 'LOGIN', 'Page "Get a code to sign in" found by "viewFooter"')

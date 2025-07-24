@@ -24,7 +24,7 @@ npm run start:scheduler
 3. Change `accounts.example.json` to `accounts.json` and add your account details
 4. Change `config.json` to your liking
 5. Run `npm run build` to build the script
-6. Run `npm run start` to start the built script **OR** `npm run start:scheduler` for daily automation
+6. Run `npm run start` to start the built script
 
 ## Notes ##
 - If you end the script without closing the browser window first (only with headless as false), you'll be left with hanging chrome instances using resources. Use taskmanager to kill these or use the included `npm run kill-chrome-win` script. (Windows)
